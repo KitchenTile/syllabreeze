@@ -7,7 +7,7 @@
 </head>
 <body>
     <h1 class="title">display database info</h1>
-    <form action="displayInfo()">
+    <form>
         <div>
             <input type="radio" id="Male" name="sex" value="Male">
             <label for="Male">Male</label><br>
@@ -15,11 +15,17 @@
        
         <input type="radio" id="Female" name="sex" value="Female">
         <label for="Female">Female</label><br>
-        <button onClick="displayInfo()">Display</button>
     </form>
 
+    <label for="sex">sex</label>
+    <input type="text" id="sex">
+
+
+    <button id="demo">Display</button>
+
+
     <h1>Data should be dispalyed below: </h1>
-    <h2 id="demo"></h2>
+    <h2 id="dataDisplay"></h2>
     <script src="./src/file.js" type="module"></script>
 </body>
 </html>
