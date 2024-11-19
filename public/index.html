@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1 class="title">display database info</h1>
+    <form action="displayInfo()">
+        <div>
+            <input type="radio" id="Male" name="sex" value="Male">
+            <label for="Male">Male</label><br>
+        </div>
+       
+        <input type="radio" id="Female" name="sex" value="Female">
+        <label for="Female">Female</label><br>
+        <button onClick="displayInfo()">Display</button>
+    </form>
+
+    <h1>Data should be dispalyed below: </h1>
+    <h2 id="demo"></h2>
+    <script src="./src/file.js" type="module"></script>
+</body>
+</html>
