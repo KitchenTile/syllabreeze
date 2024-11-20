@@ -84,19 +84,12 @@ app.get(`/M00915023/users/${userSex}`, async (req, res) => {
 
 
 // Route for creating the post
-app.post('/M00915023/create', (req,res)=> {
-    const title = req.body.name;
-    const text = req.body.story;
-    
-    console.log(title,text)
-    
-    db.query("INSERT INTO posts (name, story) VALUES (?,?)",[title,text], (err,result)=>{
-       if(err) {
-           console.log(err)
-       } 
-       console.log(result)
-    }
-    );   
+app.post('/M00915023/create', async (req, res) => {   
+    const fName = req.body.fName;
+    const lName = req.body.lName;
+
+    const result = await db.collection("users").insertOne({ fName, lName });
+    console.log(result);
     })
 
 app.listen(8080);

@@ -6,24 +6,26 @@
 //   xhttp.open("GET", '/M00915023/users');
 //   xhttp.send();
 // }
-const sexInput = document.querySelector("#sex");
+// const sexInput = document.querySelector("#sex");
 
 
-document.getElementById("demo").addEventListener("click", async () => {
+document.getElementById("button").addEventListener("click", async () => {
 
-  const userSex = sexInput.value;
+  const formInfo = new FormData(document.getElementById("createForm"));
+  const data = Object.fromEntries(formInfo.entries());
 
-  try{
-    const response = await fetch(`/M00915023/users/${userSex}`);
-    if (!response.ok) {
-      throw new Error("Network response failed");
-    }
+  console.log(data);
 
-    const data = await response.json();
-
-    document.getElementById('dataDisplay').innerHTML = JSON.stringify(data);
+  try {
+    
+    await fetch(`/M00915023/create`, {
+      method: "POST",
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(data)
+    });
 
   } catch (err) {
     console.log(err)
-  }
+    }
 })
+

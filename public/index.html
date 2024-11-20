@@ -7,21 +7,18 @@
 </head>
 <body>
     <h1 class="title">display database info</h1>
-    <form>
-        <div>
-            <input type="radio" id="Male" name="sex" value="Male">
-            <label for="Male">Male</label><br>
-        </div>
-       
-        <input type="radio" id="Female" name="sex" value="Female">
-        <label for="Female">Female</label><br>
+    <form id="createForm" action="/">
+            <label for="fName">First name: </label>
+            <input type="text" id="fName" name="fName" value=""><br>
+            <label for="lName">Last name: </label>
+            <input type="text" id="lName" name="lName" value=""><br>
+            <label for="DOB">Date of Birth:  </label>
+            <input type="date" id="DOB" name="DOB">
+            <button id="button">Display</button>
     </form>
 
-    <label for="sex">sex</label>
-    <input type="text" id="sex">
 
 
-    <button id="demo">Display</button>
 
 
     <h1>Data should be dispalyed below: </h1>
