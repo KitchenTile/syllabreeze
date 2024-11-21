@@ -66,9 +66,10 @@ app.get('/M00915023/users', async (req, res) => {
 
 const userSex = "Female";
 
-app.get(`/M00915023/users/${userSex}`, async (req, res) => {
+app.get(`/M00915023/users/:sex`, async (req, res) => {
     try {
         if (userSex) {
+            const userSex = req.params.sex;
             const findUser = await db.collection("users").find({"sex" : `${userSex}`}).toArray();
             console.log({findUser});
             res.status(200).json(findUser);
@@ -87,8 +88,14 @@ app.get(`/M00915023/users/${userSex}`, async (req, res) => {
 app.post('/M00915023/create', async (req, res) => {   
     const fName = req.body.fName;
     const lName = req.body.lName;
+    const email = req.body.email;
+    const DOB = req.body.DOB;
 
-    const result = await db.collection("users").insertOne({ fName, lName });
+    if (!req.body.fName || !req.body.lName || !req.body.email) {
+        return res.status(400).send('Name and Email are required!');
+    }
+
+    const result = await db.collection("users").insertOne({ fName, lName, email, DOB });
     console.log(result);
     })
 
