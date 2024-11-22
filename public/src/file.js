@@ -1,15 +1,29 @@
-//   const displayInfo = () => {
-//     const xhttp = new XMLHttpRequest();
-//   xhttp.onload = function() {
-//     document.getElementById("demo").innerHTML = this.responseText;
-//   }
-//   xhttp.open("GET", '/M00915023/users');
-//   xhttp.send();
-// }
-// const sexInput = document.querySelector("#sex");
+// svg wave animation for login screen
+const waveFlow = KUTE.fromTo(
+  "#visual",
+  {path: "#visual"},
+  { path: "#visual2"},
+  {repeat: 999, duration: 20000, yoyo: true}
+);
 
+waveFlow.start();
 
-document.getElementById("button").addEventListener("click", async () => {
+//input class change with for loop for scalability
+const inputList = ["fName","lName","email", "password"]
+for (let i = 0; i < inputList.length; i++){
+  const input = document.querySelector(`#${inputList[i]}`);
+  input.addEventListener("input", () => {
+    if (input.value) {
+      input.parentElement.classList.add("filled");
+    } else {
+      input.parentElement.classList.remove("filled"); 
+    }
+  })
+}
+
+// submit user signup
+document.getElementById("createform").addEventListener("submit", async (event) => {
+  event.preventDefault();
 
   const formInfo = new FormData(document.getElementById("createForm"));
   const data = Object.fromEntries(formInfo.entries());

@@ -1,28 +1,74 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./styles.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@1,100..900&family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap');
+        </style>
     <title>Document</title>
 </head>
-<body>
-    <h1 class="title">display database info</h1>
-    <form id="createForm" action="/">
-            <label for="fName">First name: </label>
-            <input type="text" id="fName" name="fName" value=""><br>
-            <label for="lName">Last name: </label>
-            <input type="text" id="lName" name="lName" value=""><br>
-            <label for="DOB">Date of Birth:  </label>
-            <input type="date" id="DOB" name="DOB">
-            <button id="button">Display</button>
-    </form>
 
-
-
-
-
-    <h1>Data should be dispalyed below: </h1>
-    <h2 id="dataDisplay"></h2>
+<body id="root">
+    <div class="login-screen-container">
+        <div class="text-left">
+            <h1 class="title">Welcome to <span class="accent-word"> Syllabreeze</span></h1>
+            <h2>Haikus that keep us together</h2>
+            <h2 id="dataDisplay"></h2>
+        </div>
+        <div class="wave">
+            <!-- <svg id="visual" viewBox="0 0 960 540" width="960" height="540" xmlns="http://www.w3.org/2000/svg"
+                xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1">
+                <path
+                    d="M702 540L711.7 517.5C721.3 495 740.7 450 701.2 405C661.7 360 563.3 315 514 270C464.7 225 464.3 180 478.5 135C492.7 90 521.3 45 535.7 22.5L550 0L960 0L960 22.5C960 45 960 90 960 135C960 180 960 225 960 270C960 315 960 360 960 405C960 450 960 495 960 517.5L960 540Z"
+                    fill="#002233" stroke-linecap="round" stroke-linejoin="miter">
+                </path>
+            </svg> -->
+            <!-- <svg id="visual" viewBox="0 0 960 540" width="960" height="540" xmlns="http://www.w3.org/2000/svg"
+                xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1">
+                <path
+                    d="M646 540L652.3 517.5C658.7 495 671.3 450 658.5 405C645.7 360 607.3 315 582.2 270C557 225 545 180 561.2 135C577.3 90 621.7 45 643.8 22.5L666 0L960 0L960 22.5C960 45 960 90 960 135C960 180 960 225 960 270C960 315 960 360 960 405C960 450 960 495 960 517.5L960 540Z"
+                    fill="#002233" stroke-linecap="round" stroke-linejoin="miter"></path>
+            </svg> -->
+           
+            <svg id="svgs" viewBox="0 0 960 540" width="960" height="540" xmlns="http://www.w3.org/2000/svg"
+                xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1">
+                <path  id="visual" d="M426 540L428.8 517.5C431.7 495 437.3 450 465.2 405C493 360 543 315 534 270C525 225 457 180 435.8 135C414.7 90 440.3 45 453.2 22.5L466 0L960 0L960 22.5C960 45 960 90 960 135C960 180 960 225 960 270C960 315 960 360 960 405C960 450 960 495 960 517.5L960 540Z" fill="#002233" stroke-linecap="round" stroke-linejoin="miter"></path>
+                <path id="visual2"
+                    d="M474 540L502.3 517.5C530.7 495 587.3 450 596.5 405C605.7 360 567.3 315 539.2 270C511 225 493 180 494 135C495 90 515 45 525 22.5L535 0L960 0L960 22.5C960 45 960 90 960 135C960 180 960 225 960 270C960 315 960 360 960 405C960 450 960 495 960 517.5L960 540Z"
+                    fill="#002233" stroke-linecap="round" stroke-linejoin="miter"></path>
+                    <path id="visual3" d="M745 540L752.2 517.5C759.3 495 773.7 450 745 405C716.3 360 644.7 315 592.7 270C540.7 225 508.3 180 502 135C495.7 90 515.3 45 525.2 22.5L535 0L960 0L960 22.5C960 45 960 90 960 135C960 180 960 225 960 270C960 315 960 360 960 405C960 450 960 495 960 517.5L960 540Z" fill="#002233" stroke-linecap="round" stroke-linejoin="miter"></path>
+            </svg>
+        </div>
+        <form class="form-container" id="createForm">
+            <h1 class="form-title">Join us now!</h1>
+            <div class="input-field">
+                <label for="fName">First Name </label>
+                <input type="text" id="fName" name="fName" value="">
+            </div>
+            <div class="input-field">
+                <label for="lName">Last Name </label>
+                <input type="text" id="lName" name="lName" value="">
+            </div>
+            <div class="input-field">
+                <label for="email">Email </label>
+                <input type="text" id="email" name="email" value="">
+            </div>
+            <div class="input-field">
+                <label for="password">Password </label>
+                <input type="text" id="password" name="password" value="">
+            </div>
+                <!-- <label for="DOB">Date of Birth: </label>
+                <input type="date" id="DOB" name="DOB"> -->
+                <span> -- ♦ --</span>
+            <button type="submit" class="button">Sign Up!</button>
+        </form>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/kute.js/2.0.0/kute.min.js"></script>
     <script src="./src/file.js" type="module"></script>
+
 </body>
+
 </html>
