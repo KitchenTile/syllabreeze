@@ -1,0 +1,299 @@
+*{
+  box-sizing: border-box;
+}
+:root {
+  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+
+  color: rgba(255, 255, 255, 0.87);
+  /* background-color: #242424; */
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  height: 100vh;
+  /* max-width: 1280px; */
+  margin: 0 auto;
+  /* padding: 2rem; */
+  text-align: center;
+  overflow: hidden;
+  
+  animation: bg-color-gradient 30s infinite alternate linear;
+}
+
+.logo {
+  height: 6em;
+  padding: 1.5em;
+  will-change: filter;
+  transition: filter 300ms;
+}
+.logo:hover {
+  filter: drop-shadow(0 0 2em #646cffaa);
+}
+
+.accent-word {
+  font-family: "Noto Serif", serif;
+  font-optical-sizing: auto;
+  font-weight: 600;
+  font-style: italic;
+
+}
+
+h1 {
+  font-size: 2.7em;
+  margin: 1em 0 0 0;
+}
+
+/* LOG IN SCREEN */
+
+.login-screen-container{
+  height: 100%;
+  display: grid;
+  grid-template-columns: 0.7fr 1fr;
+}
+
+/*left side text and carousel */
+
+.text-left{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  margin-block: 7em;
+  color: #2f2f2f;
+}
+
+.title-carousel{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.login-carousel-container{
+  overflow: hidden;
+  display: flex;
+  padding: 0;
+  justify-content: flex-start;
+  width: 90%;
+  padding-left: 65px;
+  margin-bottom: 1em;
+}
+
+#carouselSlides {
+    gap: 50px;
+    padding: 30px;
+    display: flex;
+    transition: transform 1s ease;
+}
+
+.haikuContainer{
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  flex: 0 0 66.66%;
+  margin: 0px 5px;
+  transition: transform 0.5s ease, opacity 0.5s ease;
+}
+
+.haikuContainer.center{
+  transform: scale(1.1);
+  opacity: 1;
+}
+
+.haikuContainer.side{
+  opacity: 0.5;
+  transform: scale(0.9);
+}
+
+/* register form */
+
+.form-container{
+  margin-top: 7em;
+  margin-left: 10em;
+  gap: 30px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+
+.form-container span{
+  transition: all 0.3s ease;
+  width: 40%;
+}
+
+
+.form-container span:hover{
+  letter-spacing: 5px;
+  transform: scale(1.1);
+  padding-left: 4px;
+}
+
+.input-field {
+  position: relative;
+}
+
+.input-field input {
+  font-size: 1.2rem;
+  color: white;
+  
+  padding-left: 1em;
+  height: 3.5em;
+  width: 15em;
+  border-radius: 5px;
+  border: 2px solid white;
+  background-color: #002233;
+}
+
+.input-field label {
+  position: absolute;
+  top: 0.8em;
+  left: 1em;
+  font-size: 1.3rem;
+} 
+
+.input-field:focus-within label, .filled label{
+  top: -0.7em;
+  left: -1.5em;
+  font-size: 1.1rem;
+  font-weight: 600;
+  width: 7em;
+  height: 30px;
+  color: white;
+  background-color: #002233;
+  transition: all 0.1s ease;
+}
+
+.button{
+  position: relative;
+  font-size: 1.2rem;
+  height: 3.5em;
+  width: 15em;
+  border-radius: 5px;
+  color: white;
+  background-color: #002233;
+  cursor: pointer;
+  border: 1px solid ;
+  /* transition: all 0.2s ease; */
+}
+
+/* pseudo elements for the conic border image */
+
+.button:before, .button:after{
+  content: "";
+  position: absolute;
+  width: calc(100% + 1px);
+  height: calc(100% + 1px);
+  left: 50%;
+  top: 50%;
+  translate: -50% -50%;
+  z-index: -1;
+  border-radius: 10px;
+}
+
+.button:before{
+  filter: blur(5px);
+}
+
+.button svg{
+  position: absolute;
+  top: 12.5px;
+  right: 45px;
+  width: 40px;
+  height: 40px;
+  transition: all 0.3s ease;
+}
+
+.button:hover svg{
+  transform: translateX(165%);
+  opacity: 0;
+}
+
+.button:hover{
+  filter: drop-shadow(0.5px 0.5px 3px white);
+}
+
+@property --angle{
+  syntax: "<angle>";
+  initial-value: 0deg;
+  inherits: false;
+}
+
+.button:hover::after, .button:hover::before{
+  border: 2px solid;
+  border-image: conic-gradient(from var(--angle), transparent 95%, white 5%) 1;
+  animation: 2.5s spinAround linear infinite;
+}
+
+@keyframes spinAround {
+  0% {
+    --angle: 0deg;
+  }
+  100%{
+    --angle: 360deg;
+  }
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+-webkit-box-shadow: 0 0 0px 1000px #002233 inset;
+-webkit-text-fill-color: white; 
+}
+
+/*wave css*/
+
+.wave{
+  position: absolute;
+  z-index: -1;
+  left: -10em;
+}
+
+#svgs{
+  width: 112vw;
+  height: 101vh;
+}
+
+
+@keyframes bg-color-gradient {
+  0% {
+    background-color: #ffb6b9;
+  }
+  10% {
+    background-color: #fae3d9;
+  }
+  20% {
+    background-color: #d4a5ff;
+  }
+  30% {
+    background-color: #e8eaff;
+  }
+  40% {
+    background-color: #a8e6cf;
+  }
+  50% {
+    background-color: #dcedc1;
+  }
+  60% {
+    background-color: #fddde6;
+  }
+  70% {
+    background-color: #f3e1e1;
+  }
+  80% {
+    background-color: #fae1dd;
+  }
+  90% {
+    background-color: #a0ced9;
+  }
+  100% {
+    background-color:  #fef7dc;
+  }
+}
