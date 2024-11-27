@@ -4,6 +4,7 @@ import { fileURLToPath } from "url";
 import { error } from "console";
 import session from "express-session";
 import { connectToMyMongoDB, db } from "./src/config/db.js";
+import { ObjectId } from "mongodb";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
@@ -36,17 +37,29 @@ app.get("/", async (req, res) => {
 
 // Route for creating users
 app.post('/M00915023/users', async (req, res) => {   
+
     const fName = req.body.fName;
     const username = req.body.username;
     const email = req.body.email;
     const password = req.body.password;
+
+    const user = {
+        name: fName,
+        email: email,
+        username: username,
+        password: password,
+        profilePicture: null,
+        followers: [],
+        following: [],
+        haikus: [],
+    };
 
     try{
         if (!fName || !username || !email || !password ) {
             return res.status(401).send('Not enough data to complete registration!');
         } 
 
-        const result = await db.collection("users").insertOne({ fName, username, email, password });
+        const result = await db.collection("users").insertOne(user);
         console.log("acknowledged: " + result.acknowledged);
     } catch (errpr) {
         console.log(error);
@@ -66,18 +79,20 @@ app.get("/M00915023/login", async (req, res) => {
 app.post("/M00915023/login", async (req, res) => {
     const email = req.body.email;
     const password = req.body.password;
+    let user;
 
     try{
-        const user = await db.collection("users").findOne({email});
+        await db.collection("users").findOne({email})
+         ? user = await db.collection("users").findOne({email})
+         : res.status(401).json({ message: "Invalid email or password" });
+         ;
         console.log(user.password, user.email);
 
-        if (!user || user.password !== password){
+        user.password !== password
             //status 401 is unaithenticated
-            return res.status(401).json({ message: "Invalid email or password" });
-        } 
-
-        //if user exists and password matches, link the user to the current session
-        req.session.user = user;
+            ? res.status(401).json({ message: "Invalid email or password" }) 
+            //if user exists and password matches, link the user to the current session
+            : req.session.user = user;
 
         return res.status(200).json({message: "User login successful"})
     } catch (error) {
@@ -127,14 +142,42 @@ app.get("/M00915023/contents", async (req, res) => {
 
 //post follow
 app.post("/M00915023/follow", async (req, res) => {
+    // check if user is logged in
+    if (!req.session.user){
+        return res.status(401).json({message: "User not logged in"});
+    }
+
+    const currentUserId = req.session.user._id;
+
     const userToFollow = req.body.userToFollow;
 
-    try{
+    const id = new ObjectId("6745c093583af3f7c6a64a1f");
 
-       
-    } catch (error) {
-        console.log(error);
+    const updateFollowing = async () => {
+        
+        try{
+            await db.collection("users").updateOne( 
+                { _id: new ObjectId(String(currentUserId))},
+                { $push: { following: id} }
+        );
+        } catch (error) {
+            console.log(error);
+        }
+
     }
+        updateFollowing();
+
+        // const updateFollower = async () => {
+        //     await db.collection("users").updateOne(
+        //         { _id: userToFollow.user.id },
+        //         { $addToSet: {followers: userId}}
+        //     )
+        // }
+
+        return res.status(200).json({
+            message: "Succesfully followed someone",
+            userUpdate: updateFollowing
+        });
 });
 //delete follow
 app.delete("/M00915023/follow", async (req, res) => {
@@ -168,9 +211,9 @@ app.get('/M00915023/content/search', async (req, res) => {
         return res.status(401).json({message: "User not logged in"})
     }
     try {
-        const users = await db.collection("users").find({}).toArray();
+        const content = await db.collection("haikus").find({}).toArray();
         console.log(users);
-        res.status(200).json(users);
+        res.send(users);
     } catch (error) {
         console.error('Error retrieving documents:', error);
         res.status(500).send('Error retrieving documents');
@@ -186,8 +229,8 @@ app.get(`/M00915023/users/search/:username`, async (req, res) => {
     
     const username = req.params.username;
     try {
-        const findUser = await db.collection("users").find({"username" : `${username}`}).toArray();
-            if (findUser[0].username){
+        const findUser = await db.collection("users").find({"user.username" : username}).toArray();
+            if (findUser[0].user.username){
                 console.log({findUser});
                 res.send(findUser);
             } else {
