@@ -1,7 +1,6 @@
 import path from "path";
 import express from "express";
 import { fileURLToPath } from "url";
-import { error } from "console";
 import session from "express-session";
 import { connectToMyMongoDB, db } from "./src/config/db.js";
 import { ObjectId } from "mongodb";
@@ -42,10 +41,10 @@ app.post('/M00915023/users', async (req, res) => {
 
     const fName = req.body.fName;
     const username = req.body.username;
-    const email = req.body.email;
-    const password = req.body.password;
+    const email = req.body.regEmail;
+    const password = req.body.regPassword;
 
-    //user template could be moved to new file
+    //user template could be moved to new file -- email unique
     const user = {
         name: fName,
         email: email,
@@ -97,7 +96,7 @@ app.post("/M00915023/login", async (req, res) => {
             ? res.status(401).json({ message: "Invalid email or password" }) 
             //if user exists and password matches, link the user to the current session
             : req.session.user = user;
-
+        console.log(user)
         return res.status(200).json({message: "User login successful"})
     } catch (error) {
         console.log(error);
@@ -143,7 +142,7 @@ app.get("/M00915023/contents", async (req, res) => {
         return res.status(401).json({message: "User not logged in"});
     }
     // userAuth(req, res);
-    try{
+    try{    
         const content = await db.collection("haikus").find({}).toArray();
         res.status(200).json(content);
     } catch (error) {
