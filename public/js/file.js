@@ -1,7 +1,22 @@
-const passwordInput = document.getElementById('password');
+import displayLoginPage from "./pages/login.js";
+
+displayLoginPage();
+
+//register inputs
+const passwordInput = document.getElementById('regPassword');
 const fNameInput = document.getElementById('fName');
-const emailInput = document.getElementById("email");
+const emailInput = document.getElementById("regEmail");
 const usernameInput = document.getElementById("username");
+
+//login inputs
+const loginEmailInput = document.getElementById("loginEmail");
+const loginPasswordInput = document.getElementById("loginPassword");
+
+
+
+
+const loginForm = document.getElementById("login");
+const registerForm = document.getElementById("register");
 
 
 let passwordValid = false;
@@ -39,58 +54,121 @@ const haikuData = [
   },
 ];
 
+//use toggle
+
+document.getElementById("show-register").addEventListener("click", (e) => {
+  e.preventDefault();
+  registerForm.classList.add("visible");
+  loginForm.classList.remove("visible");
+  toggleInputs(["fName", "regEmail", "username", "regPassword"]);
+});
+
+document.getElementById("show-login").addEventListener("click", (e) => {
+  e.preventDefault();
+  loginForm.classList.add("visible");
+  registerForm.classList.remove("visible");
+  toggleInputs(["loginEmail", "loginPassword"])
+});
+
 //Display carousel 
 
-const haikuCarousel = () => {
-  const carouselSlidesDiv = document.querySelector("#carouselSlides");
+// const haikuCarousel = () => {
+//   const carouselSlidesDiv = document.querySelector("#carouselSlides");
 
-  haikuData.forEach((haiku,index) => {
-      carouselSlidesDiv.innerHTML += `
-      <div class="haikuContainer ${index === 0 ? "center" : "side"}" id="haiku_${index}">
-        <h2>${haiku.sentence1}</h2>
-        <h2>${haiku.sentence2}</h2>
-        <h2>${haiku.sentence3}</h2>
-      </div>
-    `;
-  });
+//   haikuData.forEach((haiku,index) => {
+//       carouselSlidesDiv.innerHTML += `
+//       <div class="haikuContainer ${index === 0 ? "center" : "side"}" id="haiku_${index}">
+//         <h2>${haiku.sentence1}</h2>
+//         <h2>${haiku.sentence2}</h2>
+//         <h2>${haiku.sentence3}</h2>
+//       </div>
+//     `;
+//   });
 
-  let activeHaiku = 0;
+//   let activeHaiku = 0;
 
-  const centerChange = () => {
+//   const centerChange = () => {
   
-    const slides = document.querySelectorAll('.haikuContainer');
+//     const slides = document.querySelectorAll('.haikuContainer');
           
-    slides[activeHaiku].classList.remove("center");
-    slides[activeHaiku].classList.add("side");
+//     slides[activeHaiku].classList.remove("center");
+//     slides[activeHaiku].classList.add("side");
 
-    activeHaiku = (activeHaiku + 1) % haikuData.length;
+//     activeHaiku = (activeHaiku + 1) % haikuData.length;
   
-    slides[activeHaiku].classList.add("center");
-    slides[activeHaiku].classList.remove("side");
+//     slides[activeHaiku].classList.add("center");
+//     slides[activeHaiku].classList.remove("side");
 
-    const offset = -activeHaiku * 65;
-    carouselSlidesDiv.style.transform = `translateX(${offset}%)`;
+//     const offset = -activeHaiku * 65;
+//     carouselSlidesDiv.style.transform = `translateX(${offset}%)`;
+//   }
+  
+//   setInterval(centerChange, 5000);
+
+// }
+
+// haikuCarousel();
+
+
+//for each element in input list listen to inputs and toggle class
+
+const toggleInputs = (inputs) => {
+
+  const inputIdList = inputs;
+  console.log(inputIdList);
+
+  inputIdList.forEach(id => {
+      const input = document.getElementById(id);
+      input.addEventListener("input", () => {
+        if (input.value) {
+          input.parentElement.classList.add("filled");
+        } else {
+          input.parentElement.classList.remove("filled")
+        }
+      })
+  });
+}
+
+toggleInputs(["loginEmail", "loginPassword"])
+
+// -- VISUAL VALIDATION --
+
+//LOGIN
+
+//email valid
+loginEmailInput.addEventListener("input", function () {
+  const email = this.value;
+
+      //set the conditions for the email being valid
+  if (email.length >= 11 && email.includes("@") && email.includes(".com")) {
+    loginEmailInput.setAttribute("style", "border-color:#3e733a");
+    document.getElementById("loginEmailSymbol").innerHTML = " ✓"
+      emailValid = true;
+      console.log(emailValid);
+  } else {
+    loginEmailInput.setAttribute("style", "border-color:#720000");
+    document.getElementById("loginEmailSymbol").innerHTML = " 𐄂"  
+    emailValid = false;
   }
-  
-  setInterval(centerChange, 5000);
+})
 
-}
+//password valid
+loginPasswordInput.addEventListener('input',  function() {
+  const password = this.value;
 
-haikuCarousel();
+  //set the conditions for the password being valid
+  if (password.length >= 8 && password.charCodeAt(password.length-1) > 47 && password.charCodeAt(password.length-1) < 58) {
+      loginPasswordInput.setAttribute("style", "border-color:#3e733a");
+      document.getElementById("loginPasswordSymbol").innerHTML = " ✓"
+      passwordValid = true;
+  } else {
+    loginPasswordInput.setAttribute("style", "border-color:#720000");
+    document.getElementById("loginPasswordSymbol").innerHTML = " 𐄂"
+    passwordValid = false;
+  }
+});
 
-//input class change with for loop
-const inputList = ["fName", "email", "username", "password"]
-for (let i = 0; i < inputList.length; i++){
-  const input = document.querySelector(`#${inputList[i]}`);
-  input.addEventListener("input", () => {
-    if (input.value) {
-      input.parentElement.classList.add("filled");
-    } else {
-      input.parentElement.classList.remove("filled"); 
-    }
-  })
-}
-
+// REGISTRATION
 
 //password valid
 passwordInput.addEventListener('input',  function() {
@@ -98,11 +176,11 @@ passwordInput.addEventListener('input',  function() {
 
   //set the conditions for the password being valid
   if (password.length >= 8 && password.charCodeAt(password.length-1) > 47 && password.charCodeAt(password.length-1) < 58) {
-      document.getElementById("password").setAttribute("style", "border-color:#3e733a");
+      passwordInput.setAttribute("style", "border-color:#3e733a");
       document.getElementById("passwordSymbol").innerHTML = " ✓"
       passwordValid = true;
   } else {
-    document.getElementById("password").setAttribute("style", "border-color:#720000");
+    passwordInput.setAttribute("style", "border-color:#720000");
     document.getElementById("passwordSymbol").innerHTML = " 𐄂"
     passwordValid = false;
   }
@@ -115,11 +193,11 @@ fNameInput.addEventListener('input',  function() {
 
   //if name is not empty, then it's valid
   if (fName !== "") {
-    document.getElementById("fName").setAttribute("style", "border-color:#3e733a");
+    fNameInput.setAttribute("style", "border-color:#3e733a");
     document.getElementById("fNameSymbol").innerHTML = " ✓"
     fNameValid = true;
   } else {
-    document.getElementById("fName").setAttribute("style", "border-color:#720000");
+    fNameInput.setAttribute("style", "border-color:#720000");
     document.getElementById("fNameSymbol").innerHTML = " 𐄂"
     fNameValid = false;
   }
@@ -131,12 +209,12 @@ emailInput.addEventListener("input", function () {
 
       //set the conditions for the email being valid
   if (email.length >= 11 && email.includes("@") && email.includes(".com")) {
-    document.getElementById("email").setAttribute("style", "border-color:#3e733a");
+    emailInput.setAttribute("style", "border-color:#3e733a");
     document.getElementById("emailSymbol").innerHTML = " ✓"
       emailValid = true;
       console.log(emailValid);
   } else {
-    document.getElementById("email").setAttribute("style", "border-color:#720000");
+    emailInput.setAttribute("style", "border-color:#720000");
     document.getElementById("emailSymbol").innerHTML = " 𐄂"  
     emailValid = false;
   }
@@ -148,26 +226,26 @@ usernameInput.addEventListener('input',  function() {
 
   //if username is not empty, then it's valid
   if (username !== "") {
-    document.getElementById("username").setAttribute("style", "border-color:#3e733a");
+    usernameInput.setAttribute("style", "border-color:#3e733a");
     document.getElementById("usernameSymbol").innerHTML = " ✓"
     usernameValid = true;
   } else {
-    document.getElementById("username").setAttribute("style", "border-color:#720000");
+    usernameInput.setAttribute("style", "border-color:#720000");
     document.getElementById("usernameSymbol").innerHTML = " 𐄂"
     usernameValid = false;
   }
 });
 
 // submit user signup
-document.querySelector(".button").addEventListener("click", async (event) => {
-  event.preventDefault();
+document.getElementById("registerBttn").addEventListener("click", async (e) => {
+  e.preventDefault();
 
   const formInfo = new FormData(document.getElementById("createForm"));
   const data = Object.fromEntries(formInfo.entries());
 
   console.log(data);
 
-  if (emailValid && passwordValid && fNameValid && usernameValid) {
+    if (emailValid && passwordValid && fNameValid && usernameValid) {
       try {
         await fetch(`/M00915023/users`, {
           method: "POST",
@@ -175,8 +253,31 @@ document.querySelector(".button").addEventListener("click", async (event) => {
           body: JSON.stringify(data)
       });
     } catch (error) {
-        console.log(error)
+        console.log(error);
       }
   } 
-
 });
+
+// submit user signup
+document.getElementById("loginBttn").addEventListener("click", async (e) => {
+  e.preventDefault();
+
+  const formInfo = new FormData(document.getElementById("createForm"));
+  const data = Object.fromEntries(formInfo.entries());
+
+  console.log(data);
+
+    if (emailValid && passwordValid) {
+      try{
+        await fetch(`/M00915023/login`, {
+          method: "POST", 
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(data) 
+        });
+      } catch (error) {
+        console.log(error);
+      }
+    }
+  }
+);
+
